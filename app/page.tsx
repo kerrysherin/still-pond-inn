@@ -25,7 +25,7 @@ export default function Home() {
               poster="/videos/chesapeake-bay-720p.png"
               className="h-full w-full object-cover"
             >
-              <source src="/videos/chesapeake.mp4" type="video/mp4" />
+              <source src="/videos/chesapeake-bay.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
