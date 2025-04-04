@@ -31,7 +31,7 @@ export default function Footer() {
           {/* Address text moved up closer to the SVG */}
           <div className="text-center text-wood-700 text-sm mt-2">
             <p>13738 Still Pond RD, Still Pond, MD 21667</p>
-            <p>410-708-8235 | thestillpondinn@gmail.com</p>
+            <p>410-708-1525 | thestillpondinn@gmail.com</p>
           </div>
 
           <p className="text-wood-500 text-xs mt-4">

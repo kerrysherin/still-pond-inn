@@ -25,7 +25,7 @@ export default function Home() {
               poster="/videos/chesapeake-bay-720p.png"
               className="h-full w-full object-cover"
             >
-              <source src="/videos/chesapeake-bay.mp4" type="video/mp4" />
+              <source src="/videos/chesapeake.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
@@ -40,10 +40,14 @@ export default function Home() {
           </div>
 
           <div className="container relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Your Window to the Chesapeake</h1>
-            <p className="mt-4 max-w-2xl text-lg text-white/90">A peaceful retreat near the Chesapeake Bay</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">Your Window to the Chesapeake</h1>
+            <p className="mt-4 max-w-2xl text-lg md:text-lg lg:text-lg text-white/90">
+              A peaceful retreat near the Chesapeake Bay
+            </p>
             <Link href="#contact">
-              <Button className="mt-8 bg-window-600 hover:bg-window-700">Plan Your Visit</Button>
+              <Button className="mt-8 bg-window-600 hover:bg-window-700 text-base sm:text-lg px-6 py-3 h-auto">
+                Plan Your Visit
+              </Button>
             </Link>
           </div>
         </section>
@@ -190,8 +194,8 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="text-lg font-medium text-wood-800">Call Us</h3>
-                      <a href="tel:+14107088235" className="text-wood-700 hover:text-window-700 hover:underline">
-                        410-708-8235
+                      <a href="tel:+14107081525" className="text-wood-700 hover:text-window-700 hover:underline">
+                        410-708-1525
                       </a>
                     </div>
                   </div>
@@ -229,8 +233,8 @@ export default function Home() {
                     <h3 className="text-lg font-medium text-wood-800">Text Us</h3>
                     <p className="text-wood-700">
                       Send a text to{" "}
-                      <a href="sms:+14107088235" className="text-window-700 hover:underline">
-                        410-708-8235
+                      <a href="sms:+14107081525" className="text-window-700 hover:underline">
+                        410-708-1525
                       </a>{" "}
                       and we'll get back to you shortly.
                     </p>

@@ -104,7 +104,7 @@ export default function VacationRentalStructuredData() {
     description:
       "Nestled in the charming town of Still Pond, our inn offers a serene escape from the hustle and bustle of everyday life. Just a short drive from the Chesapeake Bay and only 1 mile from Betterton Beach.",
     knowsLanguage: ["en-US"],
-    telephone: "+14107088235",
+    telephone: "+14107081525",
     email: "thestillpondinn@gmail.com",
     priceRange: "$$",
     petsAllowed: false,
