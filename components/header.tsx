@@ -123,7 +123,7 @@ export default function Header() {
                   alt="The Still Pond Inn Logo"
                   width={scrolled ? 280 : 320}
                   height={scrolled ? 87.5 : 100}
-                  className="h-auto transition-all duration-300"
+                  className="h-auto transition-all duration-300 md:max-w-[220px] lg:max-w-[280px] xl:max-w-[320px]"
                 />
               </Link>
             </div>
@@ -136,7 +136,7 @@ export default function Header() {
                   alt="The Still Pond Inn Window Logo"
                   width={scrolled ? 150 : 280}
                   height={scrolled ? 60 : 112}
-                  className="h-auto"
+                  className="h-auto md:max-w-[180px] lg:max-w-[220px] xl:max-w-none transition-all duration-300"
                   priority
                 />
               </Link>

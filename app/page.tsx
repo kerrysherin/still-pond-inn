@@ -51,7 +51,7 @@ export default function Home() {
 
             {/* Lodgify Search Widget - positioned in the middle-bottom area */}
             <div className="absolute bottom-1/4 left-0 right-0 z-20 px-4 sm:px-6 md:bottom-28 lg:bottom-32">
-              <div className="mx-0 px-1 w-full ">
+              <div className="mx-0 px-1 w-full">
                 <LodgifySearchBar />
               </div>
             </div>

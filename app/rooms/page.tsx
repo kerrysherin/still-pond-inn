@@ -28,7 +28,7 @@ export default function RoomsPage() {
       bathrooms: 1,
       maxGuests: 4,
       amenities: ["wifi", "ac", "tv", "coffee", "kitchen"],
-      bookingUrl: "https://checkout.lodgify.com/still-pond-inn-unknown/en/#/673142?room=echo-suite",
+      rentalId: "673171",
     },
     {
       title: "Ziggy's Room",
@@ -53,7 +53,7 @@ export default function RoomsPage() {
       bathrooms: 1,
       maxGuests: 2,
       amenities: ["wifi", "ac", "tv", "coffee"],
-      bookingUrl: "https://checkout.lodgify.com/still-pond-inn-unknown/en/#/673142?room=ziggys-room",
+      rentalId: "673142",
     },
     {
       title: "Turtle Cove",
@@ -81,7 +81,6 @@ export default function RoomsPage() {
       bathrooms: 1,
       maxGuests: 3,
       amenities: ["wifi", "ac", "tv", "coffee"],
-      bookingUrl: "https://checkout.lodgify.com/still-pond-inn-unknown/en/#/673142?room=turtle-cove",
     },
   ]
 

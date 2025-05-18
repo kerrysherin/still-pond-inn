@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Users, Coffee, Wifi, Snowflake, Tv, Utensils } from "lucide-react"
@@ -28,7 +27,7 @@ interface RoomCardProps {
   bathrooms: number
   maxGuests: number
   amenities: RoomAmenity[]
-  bookingUrl: string
+  rentalId?: string
 }
 
 export default function RoomCard({
@@ -40,7 +39,7 @@ export default function RoomCard({
   bathrooms,
   maxGuests,
   amenities,
-  bookingUrl,
+  rentalId,
 }: RoomCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const isZiggysRoom = title === "Ziggy's Room"
@@ -177,19 +176,23 @@ export default function RoomCard({
       </CardContent>
 
       {/* Conditional rendering for different rooms */}
-      {isZiggysRoom || isEchoSuite ? (
+      {rentalId && (isZiggysRoom || isEchoSuite) ? (
         <div className="w-full m-0 p-0 overflow-hidden border-0 border-t-0">
-          <LodgifyBookNowBox rentalId={isZiggysRoom ? "673142" : "673171"} />
+          <LodgifyBookNowBox rentalId={rentalId} />
         </div>
+      ) : title === "Turtle Cove" ? (
+        <CardFooter className="flex justify-center items-center p-6 pt-0 border-t border-window-100 mt-4">
+          <div className="text-window-800 text-center pt-3">
+            <span className="text-xl font-medium">Please inquire directly</span>
+          </div>
+        </CardFooter>
       ) : (
         <CardFooter className="flex justify-between items-center p-6 pt-0 border-t border-window-100 mt-4">
           <div className="text-window-800">
             <span className="text-2xl font-bold">${price}</span>
             <span className="text-wood-600 text-sm"> / night</span>
           </div>
-          <Button className="bg-window-600 hover:bg-window-700" asChild>
-            <Link href={bookingUrl}>Book Now</Link>
-          </Button>
+          <Button className="bg-window-600 hover:bg-window-700">Book Now</Button>
         </CardFooter>
       )}
     </Card>

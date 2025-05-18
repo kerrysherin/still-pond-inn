@@ -12,20 +12,20 @@ export default function LodgifySearchBar() {
           --ldg-psb-box-shadow: 0px 24px 54px 0px rgba(0, 0, 0, 0.1);
           --ldg-psb-padding: 14px;
           --ldg-psb-input-background: #ffffff;
-          --ldg-psb-button-border-radius: 0.42em;
-          --ldg-psb-color-primary: #2d6d9e;
-          --ldg-psb-color-primary-lighter: #3d8bc7;
-          --ldg-psb-color-primary-darker: #265a83;
+          --ldg-psb-button-border-radius: 3.58em;
+          --ldg-psb-color-primary: #286d9e;
+          --ldg-psb-color-primary-lighter: #94b6cf;
+          --ldg-psb-color-primary-darker: #14374f;
           --ldg-psb-color-primary-contrast: #ffffff;
-          --ldg-semantic-color-primary: #2d6d9e;
-          --ldg-semantic-color-primary-lighter: #3d8bc7;
-          --ldg-semantic-color-primary-darker: #265a83;
+          --ldg-semantic-color-primary: #286d9e;
+          --ldg-semantic-color-primary-lighter: #94b6cf;
+          --ldg-semantic-color-primary-darker: #14374f;
           --ldg-semantic-color-primary-contrast: #ffffff;
-          --ldg-component-modal-z-index: 900;
+          --ldg-component-modal-z-index: 999;
         }
         #lodgify-search-bar {
           position: relative;
-          z-index: 900;
+          z-index: 999;
           width: 100%;
         }
         
@@ -47,38 +47,13 @@ export default function LodgifySearchBar() {
             min-width: 120px !important;
           }
         }
-
-        /* Override button styles to match our blue */
-        #lodgify-search-bar button[type="submit"],
-        #lodgify-search-bar button[type="button"].primary {
-          background-color: #2d6d9e !important;
-          border-color: #2d6d9e !important;
-        }
-
-        #lodgify-search-bar button[type="submit"]:hover,
-        #lodgify-search-bar button[type="button"].primary:hover {
-          background-color: #265a83 !important;
-          border-color: #265a83 !important;
-        }
-
-        /* Override any focus states */
-        #lodgify-search-bar button:focus,
-        #lodgify-search-bar [data-testid="portable-search-bar-container"] button:focus {
-          box-shadow: 0 0 0 2px rgba(45, 109, 158, 0.25) !important;
-        }
-        
-        /* Ensure dropdowns don't go above header */
-        #lodgify-search-bar [role="dialog"],
-        #lodgify-search-bar [role="presentation"] {
-          z-index: 900 !important;
-        }
       `}</style>
 
       <div
         id="lodgify-search-bar"
         data-website-id="582359"
         data-language-code="en"
-        data-checkout-page-url="https://checkout.lodgify.com/still-pond-inn-unknown/en/#/673142"
+        data-search-page-url="https://still-pond-inn.lodgify.com/en/all-properties"
         data-dates-check-in-label="Check-in"
         data-dates-check-out-label="Check-out"
         data-guests-counter-label="Guests"
@@ -101,7 +76,7 @@ export default function LodgifySearchBar() {
         data-done-label="Done"
         data-new-tab="true"
         data-version="stable"
-        data-layout="horizontal"
+        data-has-guests-breakdown
       ></div>
 
       <Script
