@@ -29,7 +29,8 @@ export default function RoomImageCarousel() {
     const allImages: RoomImage[] = []
 
     roomsData.forEach((room) => {
-      const roomImages = room.images.map((img) => ({
+      // Take only the first 10 images from each room to avoid too many images
+      const roomImages = room.images.slice(0, 10).map((img) => ({
         src: img.src,
         alt: img.alt || room.name,
         room: room.name,
@@ -107,7 +108,7 @@ export default function RoomImageCarousel() {
               alt={image.alt}
               fill
               className="object-cover"
-              unoptimized={image.src.includes("icdbcdn.com") || image.src.includes("blob.v0.dev")}
+              unoptimized={true}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
               <div className="container mx-auto">

@@ -17,52 +17,46 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
 
     const handleEnded = () => {
       video.currentTime = 0
-      video.play().catch((error) => {
-        console.error("Error attempting to play video:", error)
+      video.play().catch(() => {
+        // Silent catch - we'll retry on user interaction
       })
     }
 
     video.addEventListener("ended", handleEnded)
 
-    // Ensure video plays on load with better error handling
-    const playVideo = async () => {
-      try {
-        // Check if the video is ready to play
-        if (video.readyState >= 2) {
-          await video.play()
-        } else {
-          // If not ready, wait for the loadeddata event
-          video.addEventListener(
-            "loadeddata",
-            () => {
-              video.play().catch((error) => {
-                console.error("Error playing video after load:", error)
-              })
-            },
-            { once: true },
-          )
-        }
-      } catch (error) {
-        console.error("Error attempting to play video:", error)
+    // Don't auto-play on load - this causes issues in production
+    // Instead, add a click handler to play on user interaction
+    const handleClick = () => {
+      if (video.paused) {
+        video.play().catch(() => {
+          // Silent catch
+        })
+      } else {
+        video.pause()
       }
     }
 
-    playVideo()
+    video.addEventListener("click", handleClick)
+
+    // Try to play once - this might work on desktop browsers
+    video.play().catch(() => {
+      // Silent catch - we'll rely on user interaction
+    })
 
     return () => {
       video.removeEventListener("ended", handleEnded)
+      video.removeEventListener("click", handleClick)
     }
   }, [])
 
   return (
     <video
       ref={videoRef}
-      autoPlay
       muted
-      loop={true}
+      loop
       playsInline
       poster={poster}
-      className="h-full w-full object-cover"
+      className="h-full w-full object-cover cursor-pointer"
       preload="auto"
     >
       <source src={src} type="video/mp4" />
