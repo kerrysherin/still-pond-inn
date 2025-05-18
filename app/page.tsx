@@ -3,6 +3,7 @@ import ContactForm from "@/components/contact-form"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import LodgifySearchBar from "@/components/lodgify-search-bar"
+import RoomImageCarousel from "@/components/room-image-carousel"
 
 export default function Home() {
   return (
@@ -38,20 +39,22 @@ export default function Home() {
           </div>
 
           {/* Hero content - moved to top on mobile and md screens, centered on larger screens */}
-          <div className="container relative z-10 h-full">
+          <div className="relative z-10 h-full">
             {/* Hero text - positioned at top on all screens except xl+, where it's centered */}
-            <div className="pt-8 sm:pt-12 md:pt-16 xl:absolute xl:inset-0 xl:flex xl:flex-col xl:items-center xl:justify-center xl:text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#2d6d9e] xl:text-white">
-                Your Window to the Chesapeake
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg text-white/90 xl:mx-auto">
-                A peaceful retreat near the Chesapeake Bay
-              </p>
+            <div className="container">
+              <div className="pt-8 sm:pt-12 md:pt-16 xl:absolute xl:inset-0 xl:flex xl:flex-col xl:items-center xl:justify-center xl:text-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#2d6d9e] xl:text-white">
+                  Your Window to the Chesapeake
+                </h1>
+                <p className="mt-4 max-w-2xl text-lg text-white/90 xl:mx-auto">
+                  A peaceful retreat near the Chesapeake Bay
+                </p>
+              </div>
             </div>
 
             {/* Lodgify Search Widget - positioned in the middle-bottom area */}
-            <div className="absolute bottom-1/4 left-0 right-0 z-20 px-4 sm:px-6 md:bottom-28 lg:bottom-32">
-              <div className="mx-0 px-1 w-full">
+            <div className="absolute bottom-1/4 left-0 right-0 z-20 px-4 sm:px-8 md:px-12 lg:px-16 md:bottom-28 lg:bottom-32">
+              <div className="w-full">
                 <LodgifySearchBar />
               </div>
             </div>
@@ -136,49 +139,65 @@ export default function Home() {
               </div>
               <p className="text-center mt-6 text-lg font-medium text-wood-700">and more!</p>
             </div>
+          </div>
+        </section>
 
-            {/* Location Features */}
-            <div className="mt-16">
-              <h3 className="text-2xl font-semibold text-center text-window-700 mb-8">The Location</h3>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                {[
-                  {
-                    title: "1 Mile from Betterton Beach",
-                    description: "Just a short drive to beautiful sandy beaches and swimming.",
-                  },
-                  {
-                    title: "Private Entrance",
-                    description: "Enjoy the privacy and convenience of your own dedicated entrance.",
-                  },
-                  {
-                    title: "Boat Parking",
-                    description: "Bring your boat! We offer convenient parking for water enthusiasts.",
-                  },
-                  {
-                    title: "Room Options",
-                    description: "Choose between a cozy queen room or spacious queen suites.",
-                  },
-                ].map((amenity, index) => (
-                  <div
-                    key={index}
-                    className="rounded-lg border border-window-200 bg-white p-6 shadow-sm 
-                             overflow-hidden relative
-                             transition-all duration-300 ease-in-out 
-                             hover:shadow-lg hover:shadow-window-100/50 hover:border-window-400 
-                             group"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-window-100/0 to-window-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10">
-                      <h4 className="text-xl font-medium text-window-700 group-hover:text-window-800 transition-colors duration-300">
-                        {amenity.title}
-                      </h4>
-                      <p className="mt-2 text-wood-700 group-hover:text-wood-800 transition-colors duration-300">
-                        {amenity.description}
-                      </p>
-                    </div>
+        {/* Room Image Carousel - NEW SECTION - Removed bottom padding */}
+        <section className="pt-8 pb-0 bg-white">
+          <div className="container mb-8">
+            <h2 className="text-center text-3xl font-bold tracking-tight text-wood-800 sm:text-4xl mb-8">
+              Explore Our Accommodations
+            </h2>
+            <p className="text-center text-lg text-wood-700 max-w-3xl mx-auto mb-8">
+              Take a visual tour of our beautifully appointed rooms and suites, each designed to provide comfort and
+              relaxation during your stay at The Still Pond Inn.
+            </p>
+          </div>
+          <RoomImageCarousel />
+        </section>
+
+        {/* Location Features - Removed top padding */}
+        <section className="pb-16 pt-0 bg-wood-50">
+          <div className="container pt-16">
+            <h3 className="text-2xl font-semibold text-center text-window-700 mb-8">The Location</h3>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+              {[
+                {
+                  title: "1 Mile from Betterton Beach",
+                  description: "Just a short drive to beautiful sandy beaches and swimming.",
+                },
+                {
+                  title: "Private Entrance",
+                  description: "Enjoy the privacy and convenience of your own dedicated entrance.",
+                },
+                {
+                  title: "Boat Parking",
+                  description: "Bring your boat! We offer convenient parking for water enthusiasts.",
+                },
+                {
+                  title: "Room Options",
+                  description: "Choose between a cozy queen room or spacious queen suites.",
+                },
+              ].map((amenity, index) => (
+                <div
+                  key={index}
+                  className="rounded-lg border border-window-200 bg-white p-6 shadow-sm 
+                           overflow-hidden relative
+                           transition-all duration-300 ease-in-out 
+                           hover:shadow-lg hover:shadow-window-100/50 hover:border-window-400 
+                           group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-window-100/0 to-window-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10">
+                    <h4 className="text-xl font-medium text-window-700 group-hover:text-window-800 transition-colors duration-300">
+                      {amenity.title}
+                    </h4>
+                    <p className="mt-2 text-wood-700 group-hover:text-wood-800 transition-colors duration-300">
+                      {amenity.description}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

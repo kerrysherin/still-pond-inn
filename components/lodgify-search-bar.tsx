@@ -34,6 +34,8 @@ export default function LodgifySearchBar() {
           #lodgify-search-bar [data-testid="portable-search-bar-container"] {
             flex-direction: row !important;
             align-items: center !important;
+            width: 100% !important;
+            max-width: 100% !important;
           }
           
           #lodgify-search-bar [data-testid="portable-search-bar-container"] > div {
