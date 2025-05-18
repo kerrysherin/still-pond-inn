@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Users, Coffee, Wifi, Snowflake, Tv, Utensils } from "lucide-react"
 import LodgifyBookNowBox from "./lodgify-book-now-box"
+import { getRoomImages } from "@/lib/room-images"
 
 // Define amenity icons and their labels
 const amenityIcons = {
@@ -43,40 +44,21 @@ export default function RoomCard({
 }: RoomCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [images, setImages] = useState(initialImages)
-  const [isLoading, setIsLoading] = useState(!!rentalId)
   const isZiggysRoom = title === "Ziggy's Room"
   const isEchoSuite = title === "The Echo Suite"
   const isTurtleCove = title === "Turtle Cove"
 
-  // Fetch images once on component mount if we have a rentalId
+  // Load images from our static JSON file if we have a rentalId
   useEffect(() => {
     if (!rentalId) return
 
-    const fetchImages = async () => {
-      try {
-        setIsLoading(true)
+    // Get images for this specific room from our static JSON
+    const roomImages = getRoomImages(rentalId)
 
-        const response = await fetch(`/api/room-images?roomId=${rentalId}`)
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch images: ${response.status}`)
-        }
-
-        const data = await response.json()
-
-        if (data.images && Array.isArray(data.images) && data.images.length > 0) {
-          setImages(data.images)
-        }
-      } catch (error) {
-        console.error(`Error loading images for ${title}:`, error)
-        // Keep using fallback images on error
-      } finally {
-        setIsLoading(false)
-      }
+    if (roomImages && roomImages.length > 0) {
+      setImages(roomImages)
     }
-
-    fetchImages()
-  }, [rentalId, title])
+  }, [rentalId])
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
@@ -90,32 +72,26 @@ export default function RoomCard({
     <Card className="overflow-hidden border-window-200 transition-all duration-300 hover:shadow-lg hover:border-window-300 flex flex-col">
       {/* Image Carousel */}
       <div className="relative h-64 sm:h-72 md:h-80">
-        {isLoading ? (
-          <div className="absolute inset-0 bg-window-50 flex items-center justify-center">
-            <div className="animate-pulse text-window-600">Loading images...</div>
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <Image
+              src={image.src || "/placeholder.svg"}
+              alt={image.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized={image.src.includes("icdbcdn.com") || image.src.includes("blob.v0.dev")}
+            />
           </div>
-        ) : (
-          images.map((image, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-500 ${
-                index === currentImageIndex ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <Image
-                src={image.src || "/placeholder.svg"}
-                alt={image.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                unoptimized={image.src.includes("icdbcdn.com") || image.src.includes("blob.v0.dev")}
-              />
-            </div>
-          ))
-        )}
+        ))}
 
         {/* Navigation buttons */}
-        {!isLoading && images.length > 1 && (
+        {images.length > 1 && (
           <>
             <Button
               variant="ghost"

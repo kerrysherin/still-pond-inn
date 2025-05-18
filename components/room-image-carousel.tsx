@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { getAllRoomImages } from "@/lib/room-images"
 
 interface RoomImage {
   src: string
@@ -19,65 +20,28 @@ export default function RoomImageCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const autoplayRef = useRef<NodeJS.Timeout>()
 
-  // Fetch images once on component mount
+  // Load images from our static JSON file
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        setIsLoading(true)
+    // Get all room data from our static JSON
+    const roomsData = getAllRoomImages()
 
-        // Make a single API call to get all room images
-        const response = await fetch("/api/room-images")
+    // Process and combine images from all rooms
+    const allImages: RoomImage[] = []
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch images: ${response.status}`)
-        }
+    roomsData.forEach((room) => {
+      const roomImages = room.images.map((img) => ({
+        src: img.src,
+        alt: img.alt || room.name,
+        room: room.name,
+      }))
+      allImages.push(...roomImages)
+    })
 
-        const data = await response.json()
+    // Remove duplicate images based on the image URL
+    const uniqueImages = allImages.filter((image, index, self) => index === self.findIndex((t) => t.src === image.src))
 
-        if (!data.rooms || !Array.isArray(data.rooms)) {
-          throw new Error("Invalid response format")
-        }
-
-        // Process and combine images from all rooms
-        const allImages: RoomImage[] = []
-
-        data.rooms.forEach((room: any) => {
-          const roomName = room.name
-          const roomImages = room.images.map((img: any) => ({
-            src: img.src,
-            alt: img.alt || roomName,
-            room: roomName,
-          }))
-          allImages.push(...roomImages)
-        })
-
-        // Remove duplicate images based on the image URL
-        const uniqueImages = allImages.filter(
-          (image, index, self) => index === self.findIndex((t) => t.src === image.src),
-        )
-
-        setImages(uniqueImages)
-      } catch (error) {
-        console.error("Error fetching room images:", error)
-        // Set fallback images
-        setImages([
-          {
-            src: "https://sjc.microlink.io/kHduuS2ZaxqtvSUGTOXsjCUP55mORlCOfXGlFVFNPuHNbcUnKmEFEmWpA75QITNaigZ2T3s3oWHkdd-kD6sFRA.jpeg",
-            alt: "The Echo Suite - Bedroom",
-            room: "The Echo Suite",
-          },
-          {
-            src: "https://l.icdbcdn.com/oh/b6c6f5d9-a164-4a44-98b4-e135e56ec654.jpg?f=32",
-            alt: "Ziggy's Room - Main View",
-            room: "Ziggy's Room",
-          },
-        ])
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchImages()
+    setImages(uniqueImages)
+    setIsLoading(false)
   }, [])
 
   // Handle autoplay

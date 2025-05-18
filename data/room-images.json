@@ -1,0 +1,37 @@
+{
+  "lastFetched": "2024-05-18T09:00:00.000Z",
+  "rooms": [
+    {
+      "id": "673142",
+      "name": "Ziggy's Room",
+      "images": [
+        {
+          "src": "https://l.icdbcdn.com/oh/b6c6f5d9-a164-4a44-98b4-e135e56ec654.jpg?f=32",
+          "alt": "Ziggy's Room - Main View"
+        },
+        {
+          "src": "https://l.icdbcdn.com/oh/4efe0124-2450-4a96-89ba-00a5ea1b3e8f.jpg?f=32",
+          "alt": "Ziggy's Room - Bedroom View"
+        },
+        {
+          "src": "https://l.icdbcdn.com/oh/665193d1-49aa-461f-b455-cc302d7fd8bc.jpg?f=32",
+          "alt": "Ziggy's Room - Another View"
+        }
+      ]
+    },
+    {
+      "id": "673171",
+      "name": "The Echo Suite",
+      "images": [
+        {
+          "src": "https://sjc.microlink.io/kHduuS2ZaxqtvSUGTOXsjCUP55mORlCOfXGlFVFNPuHNbcUnKmEFEmWpA75QITNaigZ2T3s3oWHkdd-kD6sFRA.jpeg",
+          "alt": "The Echo Suite - Bedroom"
+        },
+        {
+          "src": "https://sjc.microlink.io/kHduuS2ZaxqtvSUGTOXsjCUP55mORlCOfXGlFVFNPuHNbcUnKmEFEmWpA75QITNaigZ2T3s3oWHkdd-kD6sFRA.jpeg",
+          "alt": "The Echo Suite - Living Area"
+        }
+      ]
+    }
+  ]
+}
