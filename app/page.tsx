@@ -4,6 +4,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import LodgifySearchBar from "@/components/lodgify-search-bar"
 import RoomImageCarousel from "@/components/room-image-carousel"
+import HeroVideo from "@/components/hero-video"
 
 export default function Home() {
   return (
@@ -16,33 +17,8 @@ export default function Home() {
         {/* Video Hero Section */}
         <section className="h-full relative">
           <div className="absolute inset-0 overflow-hidden">
-            {/* Video with fallback image */}
-            <div className="h-full w-full relative">
-              {/* Fallback image that will show if video fails */}
-              <img
-                src="/videos/chesapeake-thumbnail.png"
-                alt="Chesapeake Bay"
-                className="h-full w-full object-cover absolute inset-0"
-              />
-
-              {/* Video that will play on top of the image if it loads */}
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="h-full w-full object-cover absolute inset-0 z-10"
-                onError={(e) => {
-                  // If video fails to load, hide it to show the fallback image
-                  const target = e.target as HTMLVideoElement
-                  target.style.display = "none"
-                  console.error("Video failed to load, showing fallback image")
-                }}
-              >
-                <source src="/videos/chesapeake.mp4" type="video/mp4" />
-                {/* No text here - we already have the fallback image */}
-              </video>
-            </div>
+            {/* Using our client component for the video */}
+            <HeroVideo />
 
             {/* White gradient overlay - top */}
             <div className="absolute inset-0 bg-gradient-overlay-top pointer-events-none z-20"></div>
