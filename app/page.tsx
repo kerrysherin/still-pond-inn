@@ -22,7 +22,7 @@ export default function Home() {
               muted
               loop
               playsInline
-              poster="chesapeake-thumbnail.png"
+              poster="/videos/chesapeake-thumbnail.png"
               className="h-full w-full object-cover"
             >
               <source src="/videos/chesapeake.mp4" type="video/mp4" />
