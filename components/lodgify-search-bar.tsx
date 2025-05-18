@@ -14,14 +14,6 @@ export default function LodgifySearchBar() {
     // Check if the script has loaded and the element exists
     if (window.LodgifySearchBar && searchBarRef.current) {
       try {
-        // Force re-render by removing and re-adding the element
-        const parent = searchBarRef.current.parentNode
-        if (parent) {
-          const clone = searchBarRef.current.cloneNode(true)
-          parent.replaceChild(clone, searchBarRef.current)
-          searchBarRef.current = clone as HTMLDivElement
-        }
-
         // Initialize the search bar
         window.LodgifySearchBar.init()
         console.log("Lodgify search bar initialized")
@@ -39,6 +31,7 @@ export default function LodgifySearchBar() {
     window.addEventListener("focus", initializeSearchBar)
     window.addEventListener("visibilitychange", initializeSearchBar)
     window.addEventListener("popstate", initializeSearchBar)
+    window.addEventListener("hashchange", initializeSearchBar)
 
     // Check if we need to initialize on mount
     if (scriptLoadedRef.current) {
@@ -50,6 +43,7 @@ export default function LodgifySearchBar() {
       window.removeEventListener("focus", initializeSearchBar)
       window.removeEventListener("visibilitychange", initializeSearchBar)
       window.removeEventListener("popstate", initializeSearchBar)
+      window.removeEventListener("hashchange", initializeSearchBar)
     }
   }, [])
 
