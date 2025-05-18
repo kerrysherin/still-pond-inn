@@ -1,122 +1,50 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import Script from "next/script"
+import { useEffect, useRef } from "react"
 
 export default function LodgifySearchBar() {
   const searchBarRef = useRef<HTMLDivElement>(null)
-  const [scriptReady, setScriptReady] = useState(false)
-  const [initialized, setInitialized] = useState(false)
-  const initializationAttempts = useRef(0)
-  const maxAttempts = 20
-
-  // Function to check if the Lodgify object exists and is ready
-  const isLodgifyReady = () => {
-    return (
-      typeof window !== "undefined" &&
-      window.LodgifySearchBar !== undefined &&
-      typeof window.LodgifySearchBar.init === "function"
-    )
-  }
+  const scriptLoadedRef = useRef(false)
 
   // Function to initialize the search bar
   const initializeSearchBar = () => {
-    // Check if we've already successfully initialized
-    if (initialized) return true
+    if (!searchBarRef.current) return
 
-    // Check if the element exists
-    if (!searchBarRef.current) {
-      console.log("Search bar element not found in DOM")
-      return false
-    }
-
-    // Check if Lodgify is ready
-    if (!isLodgifyReady()) {
-      console.log("Lodgify search bar script not loaded yet")
-      return false
-    }
-
-    try {
-      // Initialize the search bar
-      window.LodgifySearchBar.init()
-      console.log("Lodgify search bar successfully initialized")
-      setInitialized(true)
-      return true
-    } catch (error) {
-      console.error("Error initializing Lodgify search bar:", error)
-      return false
+    if (typeof window.LodgifySearchBar !== "undefined" && typeof window.LodgifySearchBar.init === "function") {
+      try {
+        window.LodgifySearchBar.init()
+        console.log("Lodgify search bar initialized")
+      } catch (error) {
+        console.error("Error initializing Lodgify search bar:", error)
+      }
     }
   }
 
-  // Effect to handle script loading and initialization
+  // Effect to handle script loading
   useEffect(() => {
-    if (!scriptReady) return
-
-    // Function to attempt initialization with increasing delays
-    const attemptInitialization = () => {
-      if (initializationAttempts.current >= maxAttempts) {
-        console.error(`Failed to initialize Lodgify search bar after ${maxAttempts} attempts`)
-        return
-      }
-
-      if (initializeSearchBar()) {
-        // Success - no need for further attempts
-        return
-      }
-
-      // Schedule next attempt with increasing delay
-      initializationAttempts.current += 1
-      const delay = Math.min(500 * Math.pow(1.2, initializationAttempts.current), 10000)
-
-      console.log(`Scheduling attempt ${initializationAttempts.current} in ${delay}ms`)
-      setTimeout(attemptInitialization, delay)
+    // If the script is already loaded, initialize
+    if (scriptLoadedRef.current) {
+      // Wait a bit longer before initializing
+      setTimeout(initializeSearchBar, 1000)
+      return
     }
 
-    // Start the initialization process
-    attemptInitialization()
-
-    // Set up event listeners for page visibility and focus
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible" && !initialized) {
-        attemptInitialization()
-      }
+    // Load the script directly
+    const script = document.createElement("script")
+    script.src = "https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
+    script.async = true
+    script.onload = () => {
+      scriptLoadedRef.current = true
+      // Wait longer before initializing
+      setTimeout(initializeSearchBar, 1000)
     }
-
-    const handleFocus = () => {
-      if (!initialized) {
-        attemptInitialization()
-      }
-    }
-
-    window.addEventListener("visibilitychange", handleVisibilityChange)
-    window.addEventListener("focus", handleFocus)
+    document.body.appendChild(script)
 
     return () => {
-      window.removeEventListener("visibilitychange", handleVisibilityChange)
-      window.removeEventListener("focus", handleFocus)
+      // Clean up if component unmounts
+      scriptLoadedRef.current = false
     }
-  }, [scriptReady, initialized])
-
-  // Handle direct script injection as a fallback
-  useEffect(() => {
-    // If the script hasn't loaded after 5 seconds, try direct injection
-    const timeout = setTimeout(() => {
-      if (!scriptReady && !isLodgifyReady()) {
-        console.log("Attempting direct script injection for Lodgify")
-
-        const script = document.createElement("script")
-        script.src = "https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
-        script.async = true
-        script.onload = () => {
-          console.log("Lodgify script loaded via direct injection")
-          setScriptReady(true)
-        }
-        document.body.appendChild(script)
-      }
-    }, 5000)
-
-    return () => clearTimeout(timeout)
-  }, [scriptReady])
+  }, [])
 
   return (
     <>
@@ -196,37 +124,6 @@ export default function LodgifySearchBar() {
         data-version="stable"
         data-has-guests-breakdown
       ></div>
-
-      {/* Fallback UI that shows if initialization fails */}
-      {!initialized && initializationAttempts.current > maxAttempts / 2 && (
-        <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
-          <p className="text-center text-window-700">
-            Having trouble with our booking system?{" "}
-            <a
-              href="https://still-pond-inn.lodgify.com/en/all-properties"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-window-600 hover:underline font-medium"
-            >
-              Click here to search for availability
-            </a>
-          </p>
-        </div>
-      )}
-
-      {/* Use both onLoad and strategy="beforeInteractive" for more reliable loading */}
-      <Script
-        id="lodgify-search-bar-script"
-        src="https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
-        strategy="beforeInteractive"
-        onLoad={() => {
-          console.log("Lodgify script loaded via Next.js Script")
-          setScriptReady(true)
-        }}
-        onError={() => {
-          console.error("Failed to load Lodgify script via Next.js Script")
-        }}
-      />
     </>
   )
 }

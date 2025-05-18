@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Calendar, Users } from "lucide-react"
+import { Calendar, Users, ExternalLink } from "lucide-react"
 
 export default function FallbackSearch() {
   const [checkIn, setCheckIn] = useState("")
@@ -26,6 +26,18 @@ export default function FallbackSearch() {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="mb-3 text-sm text-window-700 flex items-center">
+        <span className="mr-1">Booking search:</span>
+        <a
+          href="https://still-pond-inn.lodgify.com/en/all-properties"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-window-600 hover:underline font-medium flex items-center"
+        >
+          Open on Lodgify <ExternalLink className="h-3 w-3 ml-1" />
+        </a>
+      </div>
+
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
         <div className="flex-1">
           <label htmlFor="check-in" className="block text-sm font-medium text-gray-700 mb-1">
