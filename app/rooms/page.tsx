@@ -10,16 +10,16 @@ const rooms = [
       "Our premium suite with bay views, featuring a spacious layout and luxury amenities for the perfect getaway.",
     images: [
       {
-        src: "/placeholder-st6c2.png",
+        src: "https://l.icdbcdn.com/oh/f4ef6f39-3e00-44e7-b585-b01cc2a6ee32.jpg?f=32",
         alt: "The Echo Suite - Main View",
       },
       {
-        src: "/placeholder-cd576.png",
+        src: "https://l.icdbcdn.com/oh/cf689c81-81f6-411f-a306-dcac87d5c89a.jpg?f=32",
         alt: "The Echo Suite - Bedroom",
       },
       {
-        src: "/placeholder-axs0k.png",
-        alt: "The Echo Suite - Bathroom",
+        src: "https://l.icdbcdn.com/oh/06403d6b-bda9-4d05-abd4-de12a8b63ffa.jpg?f=32",
+        alt: "The Echo Suite - Living Area",
       },
     ],
     price: 189,
@@ -38,16 +38,16 @@ const rooms = [
       "A cozy retreat with charming decor and all the comforts of home, perfect for couples or solo travelers.",
     images: [
       {
-        src: "/placeholder-zud8g.png",
+        src: "https://l.icdbcdn.com/oh/b6c6f5d9-a164-4a44-98b4-e135e56ec654.jpg?f=32",
         alt: "Ziggy's Room - Main View",
       },
       {
-        src: "/placeholder-cmxwq.png",
-        alt: "Ziggy's Room - Sitting Area",
+        src: "https://l.icdbcdn.com/oh/4efe0124-2450-4a96-89ba-00a5ea1b3e8f.jpg?f=32",
+        alt: "Ziggy's Room - Bedroom View",
       },
       {
-        src: "/modern-bathroom-with-shower.png",
-        alt: "Ziggy's Room - Bathroom",
+        src: "https://l.icdbcdn.com/oh/665193d1-49aa-461f-b455-cc302d7fd8bc.jpg?f=32",
+        alt: "Ziggy's Room - Another View",
       },
     ],
     price: 149,
@@ -63,15 +63,15 @@ const rooms = [
       "A serene space inspired by the Chesapeake's wildlife, offering comfort and tranquility for your stay.",
     images: [
       {
-        src: "/placeholder-hgsnv.png",
+        src: "https://l.icdbcdn.com/oh/fb542218-5b74-4efe-8921-8ab8ca24bc53.jpg?f=32",
         alt: "Turtle Cove - Main View",
       },
       {
-        src: "/placeholder-coy9l.png",
-        alt: "Turtle Cove - Window View",
+        src: "https://l.icdbcdn.com/oh/4ec5fab3-30f3-46ea-a807-022675ac3c3c.jpg?f=32",
+        alt: "Turtle Cove - Room Detail",
       },
       {
-        src: "/placeholder-8msqq.png",
+        src: "https://l.icdbcdn.com/oh/19882e6f-42d8-4d25-bf83-8a58e1e94b50.jpg?f=32",
         alt: "Turtle Cove - Bathroom",
       },
     ],

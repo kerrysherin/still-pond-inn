@@ -28,7 +28,6 @@ export default function Home() {
               <source src="/videos/chesapeake.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-
             {/* White gradient overlay - top */}
             <div className="absolute inset-0 bg-gradient-overlay-top pointer-events-none"></div>
 
