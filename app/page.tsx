@@ -16,30 +16,46 @@ export default function Home() {
         {/* Video Hero Section */}
         <section className="h-full relative">
           <div className="absolute inset-0 overflow-hidden">
-            {/* Using the original video tag with poster that was working before */}
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/videos/chesapeake-thumbnail.png"
-              className="h-full w-full object-cover"
-            >
-              <source src="/videos/chesapeake.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {/* Video with fallback image */}
+            <div className="h-full w-full relative">
+              {/* Fallback image that will show if video fails */}
+              <img
+                src="/videos/chesapeake-thumbnail.png"
+                alt="Chesapeake Bay"
+                className="h-full w-full object-cover absolute inset-0"
+              />
+
+              {/* Video that will play on top of the image if it loads */}
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover absolute inset-0 z-10"
+                onError={(e) => {
+                  // If video fails to load, hide it to show the fallback image
+                  const target = e.target as HTMLVideoElement
+                  target.style.display = "none"
+                  console.error("Video failed to load, showing fallback image")
+                }}
+              >
+                <source src="/videos/chesapeake.mp4" type="video/mp4" />
+                {/* No text here - we already have the fallback image */}
+              </video>
+            </div>
+
             {/* White gradient overlay - top */}
-            <div className="absolute inset-0 bg-gradient-overlay-top pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-overlay-top pointer-events-none z-20"></div>
 
             {/* White gradient overlay - bottom */}
-            <div className="absolute inset-0 bg-gradient-overlay-bottom pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-overlay-bottom pointer-events-none z-20"></div>
 
             {/* Existing dark gradient overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-20"></div>
           </div>
 
           {/* Hero content - moved to top on mobile and md screens, centered on larger screens */}
-          <div className="relative z-10 h-full">
+          <div className="relative z-30 h-full">
             {/* Hero text - positioned at top on all screens except xl+, where it's centered */}
             <div className="container">
               <div className="pt-8 sm:pt-12 md:pt-16 xl:absolute xl:inset-0 xl:flex xl:flex-col xl:items-center xl:justify-center xl:text-center">
