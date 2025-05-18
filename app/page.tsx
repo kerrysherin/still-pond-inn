@@ -4,6 +4,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import LodgifySearchBar from "@/components/lodgify-search-bar"
 import RoomImageCarousel from "@/components/room-image-carousel"
+import Script from "next/script"
 
 export default function Home() {
   return (
@@ -54,8 +55,39 @@ export default function Home() {
 
             {/* Lodgify Search Widget - positioned in the middle-bottom area */}
             <div className="absolute bottom-1/4 left-0 right-0 z-20 px-4 sm:px-8 md:px-12 lg:px-16 md:bottom-28 lg:bottom-32">
-              <div className="w-full">
+              <div className="w-full md:w-4/5 lg:w-3/4 mx-auto">
                 <LodgifySearchBar />
+
+                {/* Hidden script to force load Lodgify */}
+                <Script
+                  id="force-lodgify-load"
+                  strategy="afterInteractive"
+                  dangerouslySetInnerHTML={{
+                    __html: `
+                      // Try to load and initialize Lodgify
+                      (function() {
+                        if (typeof window.LodgifySearchBar === 'undefined') {
+                          var script = document.createElement('script');
+                          script.src = 'https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js';
+                          script.async = true;
+                          document.head.appendChild(script);
+                          
+                          script.onload = function() {
+                            if (typeof window.LodgifySearchBar !== 'undefined') {
+                              setTimeout(function() {
+                                window.LodgifySearchBar.init();
+                              }, 100);
+                            }
+                          };
+                        } else if (typeof window.LodgifySearchBar.init === 'function') {
+                          setTimeout(function() {
+                            window.LodgifySearchBar.init();
+                          }, 100);
+                        }
+                      })();
+                    `,
+                  }}
+                />
               </div>
             </div>
           </div>
