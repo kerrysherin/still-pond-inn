@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 
 export default function Footer() {
@@ -9,7 +8,7 @@ export default function Footer() {
           {/* Combined logo stack */}
           <div className="flex flex-col items-center">
             <Link href="/">
-              <Image
+              <img
                 src="/images/logo.png"
                 alt="The Still Pond Inn Window Logo"
                 width={150}
@@ -18,7 +17,7 @@ export default function Footer() {
               />
             </Link>
             <Link href="/" className="-mt-5">
-              <Image
+              <img
                 src="/images/the-still-pond-inn.svg"
                 alt="The Still Pond Inn Logo"
                 width={180}

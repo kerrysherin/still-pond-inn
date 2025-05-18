@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Users, Coffee, Wifi, Snowflake, Tv, Utensils } from "lucide-react"
@@ -79,12 +78,10 @@ export default function RoomCard({
               index === currentImageIndex ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
-            <Image
+            <img
               src={image.src || "/placeholder.svg"}
               alt={image.alt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover w-full h-full"
               loading="lazy"
             />
           </div>

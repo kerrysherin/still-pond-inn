@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { getAllRoomImages } from "@/lib/room-images"
@@ -112,13 +111,11 @@ export default function RoomImageCarousel() {
               index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
-            <Image
+            <img
               src={image.src || "/placeholder.svg"}
               alt={image.alt}
-              fill
-              className="object-cover"
+              className="object-cover w-full h-full"
               loading="lazy" // Properly lazy load images
-              sizes="100vw"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
               <div className="container mx-auto">

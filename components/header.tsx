@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, Phone, Mail, X } from "lucide-react"
@@ -76,20 +75,19 @@ export default function Header() {
           {/* Window logo on top - now linked to homepage */}
           <div className="flex flex-col items-center">
             <Link href="/">
-              <Image
+              <img
                 src="/images/logo.png"
                 alt="The Still Pond Inn Window Logo"
                 width={scrolled ? 160 : 220}
                 height={scrolled ? 64 : 88}
                 className="h-auto"
-                priority
               />
             </Link>
 
             {/* SVG logo with even more aggressive negative margin - now linked to homepage */}
             <div className="mt-[-45px]">
               <Link href="/">
-                <Image
+                <img
                   src="/images/the-still-pond-inn.svg"
                   alt="The Still Pond Inn Logo"
                   width={scrolled ? 240 : 280}
@@ -118,7 +116,7 @@ export default function Header() {
             {/* SVG logo on the left - now linked to homepage */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 transition-transform duration-300 pt-5">
               <Link href="/">
-                <Image
+                <img
                   src="/images/the-still-pond-inn.svg"
                   alt="The Still Pond Inn Logo"
                   width={scrolled ? 280 : 320}
@@ -131,13 +129,12 @@ export default function Header() {
             {/* Window logo in center - now linked to homepage */}
             <div className="transition-all duration-300 ease-out">
               <Link href="/">
-                <Image
+                <img
                   src="/images/logo.png"
                   alt="The Still Pond Inn Window Logo"
                   width={scrolled ? 150 : 280}
                   height={scrolled ? 60 : 112}
                   className="h-auto md:max-w-[180px] lg:max-w-[220px] xl:max-w-none transition-all duration-300"
-                  priority
                 />
               </Link>
             </div>
