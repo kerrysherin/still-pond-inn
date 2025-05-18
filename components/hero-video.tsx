@@ -7,26 +7,20 @@ export default function HeroVideo() {
 
   return (
     <div className="h-full w-full relative">
-      {/* Use the actual thumbnail image that exists in your project */}
-      <img
-        src="/videos/chesapeake-bay-720p.png"
-        alt="Chesapeake Bay"
-        className="h-full w-full object-cover absolute inset-0"
-      />
+      {/* If video fails, show a colored background */}
+      {videoFailed && <div className="absolute inset-0 bg-window-600" aria-hidden="true"></div>}
 
-      {/* Video that will play on top of the image if it loads */}
-      {!videoFailed && (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="h-full w-full object-cover absolute inset-0 z-10"
-          onError={() => setVideoFailed(true)}
-        >
-          <source src="/videos/chesapeake.mp4" type="video/mp4" />
-        </video>
-      )}
+      {/* Just the video without a poster/thumbnail */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="h-full w-full object-cover absolute inset-0"
+        onError={() => setVideoFailed(true)}
+      >
+        <source src="/videos/chesapeake.mp4" type="video/mp4" />
+      </video>
     </div>
   )
 }

@@ -23,7 +23,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  // Ensure static files are properly served
+  // Ensure video files are properly served
   async headers() {
     return [
       {
@@ -32,6 +32,10 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'Content-Type',
+            value: 'video/mp4',
           },
         ],
       },
