@@ -1,6 +1,18 @@
+let userConfig = undefined
+try {
+  // try to import ESM first
+  userConfig = await import('./v0-user-next.config.mjs')
+} catch (e) {
+  try {
+    // fallback to CJS import
+    userConfig = await import("./v0-user-next.config");
+  } catch (innerError) {
+    // ignore error
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -8,35 +20,32 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['l.icdbcdn.com', 'sjc.microlink.io'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'l.icdbcdn.com',
-        pathname: '/oh/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sjc.microlink.io',
-        pathname: '/**',
-      },
-    ],
     unoptimized: true,
   },
-  // Ensure static files are properly served
-  async headers() {
-    return [
-      {
-        source: '/videos/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
+  experimental: {
+    webpackBuildWorker: true,
+    parallelServerBuildTraces: true,
+    parallelServerCompiles: true,
   },
+}
+
+if (userConfig) {
+  // ESM imports will have a "default" property
+  const config = userConfig.default || userConfig
+
+  for (const key in config) {
+    if (
+      typeof nextConfig[key] === 'object' &&
+      !Array.isArray(nextConfig[key])
+    ) {
+      nextConfig[key] = {
+        ...nextConfig[key],
+        ...config[key],
+      }
+    } else {
+      nextConfig[key] = config[key]
+    }
+  }
 }
 
 export default nextConfig
