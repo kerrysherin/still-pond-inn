@@ -4,6 +4,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import LodgifySearchBar from "@/components/lodgify-search-bar"
 import RoomImageCarousel from "@/components/room-image-carousel"
+import VideoPlayer from "@/components/video-player"
 
 export default function Home() {
   return (
@@ -16,17 +17,8 @@ export default function Home() {
         {/* Video Hero Section */}
         <section className="h-full relative">
           <div className="absolute inset-0 overflow-hidden">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/videos/chesapeake-bay-720p.png"
-              className="h-full w-full object-cover"
-            >
-              <source src="/videos/chesapeake.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {/* Use the VideoPlayer component for better control */}
+            <VideoPlayer src="/videos/chesapeake.mp4" poster="/videos/chesapeake-bay-720p.png" />
 
             {/* White gradient overlay - top */}
             <div className="absolute inset-0 bg-gradient-overlay-top pointer-events-none"></div>

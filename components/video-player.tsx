@@ -24,10 +24,30 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
 
     video.addEventListener("ended", handleEnded)
 
-    // Ensure video plays on load
-    video.play().catch((error) => {
-      console.error("Error attempting to play video:", error)
-    })
+    // Ensure video plays on load with better error handling
+    const playVideo = async () => {
+      try {
+        // Check if the video is ready to play
+        if (video.readyState >= 2) {
+          await video.play()
+        } else {
+          // If not ready, wait for the loadeddata event
+          video.addEventListener(
+            "loadeddata",
+            () => {
+              video.play().catch((error) => {
+                console.error("Error playing video after load:", error)
+              })
+            },
+            { once: true },
+          )
+        }
+      } catch (error) {
+        console.error("Error attempting to play video:", error)
+      }
+    }
+
+    playVideo()
 
     return () => {
       video.removeEventListener("ended", handleEnded)
@@ -35,7 +55,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
   }, [])
 
   return (
-    <video ref={videoRef} autoPlay muted loop={true} playsInline poster={poster} className="h-full w-full object-cover">
+    <video
+      ref={videoRef}
+      autoPlay
+      muted
+      loop={true}
+      playsInline
+      poster={poster}
+      className="h-full w-full object-cover"
+      preload="auto"
+    >
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
     </video>

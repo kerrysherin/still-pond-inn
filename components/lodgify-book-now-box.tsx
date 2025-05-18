@@ -1,4 +1,5 @@
 "use client"
+import { useEffect, useRef } from "react"
 import Script from "next/script"
 
 interface LodgifyBookNowBoxProps {
@@ -6,6 +7,43 @@ interface LodgifyBookNowBoxProps {
 }
 
 export default function LodgifyBookNowBox({ rentalId }: LodgifyBookNowBoxProps) {
+  const initialized = useRef(false)
+  const bookNowBoxRef = useRef<HTMLDivElement>(null)
+
+  // This function will reinitialize the book now box when needed
+  const initializeBookNowBox = () => {
+    if (typeof window !== "undefined" && window.LodgifyBookNowBox && bookNowBoxRef.current) {
+      try {
+        window.LodgifyBookNowBox.init()
+        console.log("Lodgify book now box reinitialized")
+      } catch (error) {
+        console.error("Error reinitializing Lodgify book now box:", error)
+      }
+    }
+  }
+
+  // Initialize book now box when component mounts and when navigating back to the page
+  useEffect(() => {
+    // Only run once
+    if (!initialized.current) {
+      initialized.current = true
+
+      // Add event listener for when user navigates back to the page
+      window.addEventListener("focus", initializeBookNowBox)
+    }
+
+    return () => {
+      // Clean up event listeners
+      window.removeEventListener("focus", initializeBookNowBox)
+    }
+  }, [])
+
+  // Handle script load event
+  const handleScriptLoad = () => {
+    // Short delay to ensure the script is fully initialized
+    setTimeout(initializeBookNowBox, 100)
+  }
+
   return (
     <>
       <style jsx global>{`
@@ -48,6 +86,7 @@ export default function LodgifyBookNowBox({ rentalId }: LodgifyBookNowBoxProps) 
         }
       `}</style>
       <div
+        ref={bookNowBoxRef}
         id="lodgify-book-now-box"
         data-rental-id={rentalId}
         data-website-id="582359"
@@ -81,7 +120,11 @@ export default function LodgifyBookNowBox({ rentalId }: LodgifyBookNowBoxProps) 
         data-done-label="Done"
       ></div>
 
-      <Script src="https://app.lodgify.com/book-now-box/stable/renderBookNowBox.js" strategy="afterInteractive" />
+      <Script
+        src="https://app.lodgify.com/book-now-box/stable/renderBookNowBox.js"
+        strategy="afterInteractive"
+        onLoad={handleScriptLoad}
+      />
     </>
   )
 }

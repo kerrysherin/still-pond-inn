@@ -1,8 +1,50 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import Script from "next/script"
 
 export default function LodgifySearchBar() {
+  const initialized = useRef(false)
+  const searchBarRef = useRef<HTMLDivElement>(null)
+
+  // This function will reinitialize the search bar when needed
+  const initializeSearchBar = () => {
+    if (typeof window !== "undefined" && window.LodgifySearchBar && searchBarRef.current) {
+      try {
+        window.LodgifySearchBar.init()
+        console.log("Lodgify search bar reinitialized")
+      } catch (error) {
+        console.error("Error reinitializing Lodgify search bar:", error)
+      }
+    }
+  }
+
+  // Initialize search bar when component mounts and when navigating back to the page
+  useEffect(() => {
+    // Only run once
+    if (!initialized.current) {
+      initialized.current = true
+
+      // Add event listener for when user navigates back to the page
+      window.addEventListener("focus", initializeSearchBar)
+
+      // Add event listener for route changes (hash changes)
+      window.addEventListener("hashchange", initializeSearchBar)
+    }
+
+    return () => {
+      // Clean up event listeners
+      window.removeEventListener("focus", initializeSearchBar)
+      window.removeEventListener("hashchange", initializeSearchBar)
+    }
+  }, [])
+
+  // Handle script load event
+  const handleScriptLoad = () => {
+    // Short delay to ensure the script is fully initialized
+    setTimeout(initializeSearchBar, 100)
+  }
+
   return (
     <>
       <style jsx global>{`
@@ -52,6 +94,7 @@ export default function LodgifySearchBar() {
       `}</style>
 
       <div
+        ref={searchBarRef}
         id="lodgify-search-bar"
         data-website-id="582359"
         data-language-code="en"
@@ -84,6 +127,7 @@ export default function LodgifySearchBar() {
       <Script
         src="https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
         strategy="afterInteractive"
+        onLoad={handleScriptLoad}
       />
     </>
   )
