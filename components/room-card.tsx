@@ -85,7 +85,7 @@ export default function RoomCard({
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              unoptimized={image.src.includes("icdbcdn.com") || image.src.includes("blob.v0.dev")}
+              loading="lazy"
             />
           </div>
         ))}

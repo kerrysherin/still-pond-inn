@@ -17,48 +17,25 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
 
     const handleEnded = () => {
       video.currentTime = 0
-      video.play().catch(() => {
-        // Silent catch - we'll retry on user interaction
+      video.play().catch((error) => {
+        console.error("Error attempting to play video:", error)
       })
     }
 
     video.addEventListener("ended", handleEnded)
 
-    // Don't auto-play on load - this causes issues in production
-    // Instead, add a click handler to play on user interaction
-    const handleClick = () => {
-      if (video.paused) {
-        video.play().catch(() => {
-          // Silent catch
-        })
-      } else {
-        video.pause()
-      }
-    }
-
-    video.addEventListener("click", handleClick)
-
-    // Try to play once - this might work on desktop browsers
-    video.play().catch(() => {
-      // Silent catch - we'll rely on user interaction
+    // Ensure video plays on load
+    video.play().catch((error) => {
+      console.error("Error attempting to play video:", error)
     })
 
     return () => {
       video.removeEventListener("ended", handleEnded)
-      video.removeEventListener("click", handleClick)
     }
   }, [])
 
   return (
-    <video
-      ref={videoRef}
-      muted
-      loop
-      playsInline
-      poster={poster}
-      className="h-full w-full object-cover cursor-pointer"
-      preload="auto"
-    >
+    <video ref={videoRef} autoPlay muted loop playsInline poster={poster} className="h-full w-full object-cover">
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
     </video>
