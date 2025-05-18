@@ -7,9 +7,9 @@ export default function HeroVideo() {
 
   return (
     <div className="h-full w-full relative">
-      {/* Fallback image that will show if video fails */}
+      {/* Use the actual thumbnail image that exists in your project */}
       <img
-        src="/videos/chesapeake-thumbnail.png"
+        src="/videos/chesapeake-bay-720p.png"
         alt="Chesapeake Bay"
         className="h-full w-full object-cover absolute inset-0"
       />

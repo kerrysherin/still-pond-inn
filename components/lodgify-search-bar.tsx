@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import Script from "next/script"
 
 export default function LodgifySearchBar() {
   const searchBarRef = useRef<HTMLDivElement>(null)
@@ -29,17 +30,7 @@ export default function LodgifySearchBar() {
       return
     }
 
-    // Load the script directly
-    const script = document.createElement("script")
-    script.src = "https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
-    script.async = true
-    script.onload = () => {
-      scriptLoadedRef.current = true
-      // Wait longer before initializing
-      setTimeout(initializeSearchBar, 1000)
-    }
-    document.body.appendChild(script)
-
+    // We'll use the Next.js Script component instead of manual script loading
     return () => {
       // Clean up if component unmounts
       scriptLoadedRef.current = false
@@ -124,6 +115,18 @@ export default function LodgifySearchBar() {
         data-version="stable"
         data-has-guests-breakdown
       ></div>
+
+      {/* Use Next.js Script component with proper strategy and crossOrigin */}
+      <Script
+        src="https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"
+        strategy="lazyOnload"
+        crossOrigin="anonymous"
+        onLoad={() => {
+          scriptLoadedRef.current = true
+          // Give it some time to initialize
+          setTimeout(initializeSearchBar, 1000)
+        }}
+      />
     </>
   )
 }

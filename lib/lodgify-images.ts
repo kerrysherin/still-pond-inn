@@ -78,9 +78,14 @@ export async function getZiggyImages(): Promise<LodgifyImage[]> {
     return cachedZiggyImages
   }
 
-  const images = await fetchImagesFromLodgify("673142")
-  cachedZiggyImages = images
-  return images
+  try {
+    const images = await fetchImagesFromLodgify("673142")
+    cachedZiggyImages = images
+    return images
+  } catch (error) {
+    console.error("Error getting Ziggy's Room images:", error)
+    return fallbackImages["673142"]
+  }
 }
 
 // Function to get Echo Suite images (cached)
@@ -89,25 +94,46 @@ export async function getEchoImages(): Promise<LodgifyImage[]> {
     return cachedEchoImages
   }
 
-  const images = await fetchImagesFromLodgify("673171")
-  cachedEchoImages = images
-  return images
+  try {
+    const images = await fetchImagesFromLodgify("673171")
+    cachedEchoImages = images
+    return images
+  } catch (error) {
+    console.error("Error getting Echo Suite images:", error)
+    return fallbackImages["673171"]
+  }
 }
 
 // Function to get all room images at once
 export async function getAllRoomImages(): Promise<RoomImages[]> {
-  const [ziggyImages, echoImages] = await Promise.all([getZiggyImages(), getEchoImages()])
+  try {
+    const [ziggyImages, echoImages] = await Promise.all([getZiggyImages(), getEchoImages()])
 
-  return [
-    {
-      id: "673142",
-      name: "Ziggy's Room",
-      images: ziggyImages,
-    },
-    {
-      id: "673171",
-      name: "The Echo Suite",
-      images: echoImages,
-    },
-  ]
+    return [
+      {
+        id: "673142",
+        name: "Ziggy's Room",
+        images: ziggyImages,
+      },
+      {
+        id: "673171",
+        name: "The Echo Suite",
+        images: echoImages,
+      },
+    ]
+  } catch (error) {
+    console.error("Error getting all room images:", error)
+    return [
+      {
+        id: "673142",
+        name: "Ziggy's Room",
+        images: fallbackImages["673142"],
+      },
+      {
+        id: "673171",
+        name: "The Echo Suite",
+        images: fallbackImages["673171"],
+      },
+    ]
+  }
 }

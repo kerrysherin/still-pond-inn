@@ -38,12 +38,6 @@ export default function LodgifyBookNowBox({ rentalId }: LodgifyBookNowBoxProps) 
     }
   }, [])
 
-  // Handle script load event
-  const handleScriptLoad = () => {
-    // Short delay to ensure the script is fully initialized
-    setTimeout(initializeBookNowBox, 100)
-  }
-
   return (
     <>
       <style jsx global>{`
@@ -122,8 +116,9 @@ export default function LodgifyBookNowBox({ rentalId }: LodgifyBookNowBoxProps) 
 
       <Script
         src="https://app.lodgify.com/book-now-box/stable/renderBookNowBox.js"
-        strategy="afterInteractive"
-        onLoad={handleScriptLoad}
+        strategy="lazyOnload"
+        crossOrigin="anonymous"
+        onLoad={() => setTimeout(initializeBookNowBox, 1000)}
       />
     </>
   )

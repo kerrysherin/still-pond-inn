@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <VacationRentalStructuredData />
         <VideoStructuredData />
-        {/* Preload the Lodgify script */}
+        {/* Fix the preload by adding crossOrigin attribute */}
         <link
           rel="preload"
           href="https://app.lodgify.com/portable-search-bar/stable/renderPortableSearchBar.js"

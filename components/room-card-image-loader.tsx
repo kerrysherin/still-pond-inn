@@ -29,13 +29,7 @@ export function RoomCardImageLoader({ room, onImagesLoaded }: RoomCardImageLoade
           throw new Error(`Failed to fetch images: ${response.status} - ${errorText}`)
         }
 
-        let data
-        try {
-          data = await response.json()
-        } catch (parseError) {
-          console.error("Error parsing JSON:", parseError)
-          throw new Error("Invalid response format")
-        }
+        const data = await response.json()
 
         if (data && data.length > 0 && data[0].images && data[0].images.length > 0) {
           // Get the first 5 images or all if less than 5

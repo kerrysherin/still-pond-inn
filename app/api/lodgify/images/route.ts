@@ -44,17 +44,12 @@ export async function GET(request: Request) {
       }
 
       if (!response.ok) {
-        throw new Error(`Lodgify API returned ${response.status}: ${await response.text()}`)
+        throw new Error(`Lodgify API returned ${response.status}`)
       }
 
       // Try to parse the response as JSON
-      const text = await response.text()
-      try {
-        responseData = JSON.parse(text)
-        success = true
-      } catch (parseError) {
-        throw new Error(`Failed to parse response as JSON: ${text.substring(0, 100)}...`)
-      }
+      responseData = await response.json()
+      success = true
     } catch (error) {
       lastError = error
       retries++
