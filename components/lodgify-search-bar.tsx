@@ -4,44 +4,60 @@ import { useEffect, useRef } from "react"
 import Script from "next/script"
 
 export default function LodgifySearchBar() {
-  const initialized = useRef(false)
   const searchBarRef = useRef<HTMLDivElement>(null)
+  const scriptLoadedRef = useRef(false)
 
-  // This function will reinitialize the search bar when needed
+  // Function to initialize or reinitialize the search bar
   const initializeSearchBar = () => {
-    if (typeof window !== "undefined" && window.LodgifySearchBar && searchBarRef.current) {
+    if (typeof window === "undefined") return
+
+    // Check if the script has loaded and the element exists
+    if (window.LodgifySearchBar && searchBarRef.current) {
       try {
+        // Force re-render by removing and re-adding the element
+        const parent = searchBarRef.current.parentNode
+        if (parent) {
+          const clone = searchBarRef.current.cloneNode(true)
+          parent.replaceChild(clone, searchBarRef.current)
+          searchBarRef.current = clone as HTMLDivElement
+        }
+
+        // Initialize the search bar
         window.LodgifySearchBar.init()
-        console.log("Lodgify search bar reinitialized")
+        console.log("Lodgify search bar initialized")
       } catch (error) {
-        console.error("Error reinitializing Lodgify search bar:", error)
+        console.error("Error initializing Lodgify search bar:", error)
       }
+    } else {
+      console.log("Lodgify search bar script not loaded yet or element not found")
     }
   }
 
-  // Initialize search bar when component mounts and when navigating back to the page
+  // Initialize when component mounts and handle navigation events
   useEffect(() => {
-    // Only run once
-    if (!initialized.current) {
-      initialized.current = true
+    // Add event listeners for navigation and visibility changes
+    window.addEventListener("focus", initializeSearchBar)
+    window.addEventListener("visibilitychange", initializeSearchBar)
+    window.addEventListener("popstate", initializeSearchBar)
 
-      // Add event listener for when user navigates back to the page
-      window.addEventListener("focus", initializeSearchBar)
-
-      // Add event listener for route changes (hash changes)
-      window.addEventListener("hashchange", initializeSearchBar)
+    // Check if we need to initialize on mount
+    if (scriptLoadedRef.current) {
+      initializeSearchBar()
     }
 
     return () => {
       // Clean up event listeners
       window.removeEventListener("focus", initializeSearchBar)
-      window.removeEventListener("hashchange", initializeSearchBar)
+      window.removeEventListener("visibilitychange", initializeSearchBar)
+      window.removeEventListener("popstate", initializeSearchBar)
     }
   }, [])
 
   // Handle script load event
   const handleScriptLoad = () => {
-    // Short delay to ensure the script is fully initialized
+    scriptLoadedRef.current = true
+
+    // Initialize with a delay to ensure the script is fully loaded
     setTimeout(initializeSearchBar, 100)
   }
 

@@ -16,14 +16,8 @@ export default function Home() {
         {/* Video Hero Section */}
         <section className="h-full relative">
           <div className="absolute inset-0 overflow-hidden">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/videos/chesapeake-bay-720p.png"
-              className="h-full w-full object-cover"
-            >
+            {/* Removed poster attribute completely */}
+            <video autoPlay muted loop playsInline className="h-full w-full object-cover">
               <source src="/videos/chesapeake.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
