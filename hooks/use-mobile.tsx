@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 
+// This hook is no longer used - we're using Tailwind's responsive classes instead
 export function useMobile(breakpoint = 768): boolean {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -22,4 +23,3 @@ export function useMobile(breakpoint = 768): boolean {
 
   return isMobile
 }
-

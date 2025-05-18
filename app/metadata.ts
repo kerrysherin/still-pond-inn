@@ -21,4 +21,3 @@ export const metadata: Metadata = {
       "A peaceful retreat near the Chesapeake Bay. Enjoy comfortable accommodations just 1 mile from Betterton Beach.",
   },
 }
-

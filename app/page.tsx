@@ -1,10 +1,8 @@
-import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import ContactForm from "@/components/contact-form"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import LodgifySearchBar from "@/components/lodgify-search-bar"
 
 export default function Home() {
   return (
@@ -25,7 +23,7 @@ export default function Home() {
               poster="/videos/chesapeake-bay-720p.png"
               className="h-full w-full object-cover"
             >
-              <source src="/videos/chesapeake-bay.mp4" type="video/mp4" />
+              <source src="/videos/chesapeake.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
@@ -39,16 +37,24 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>
 
-          <div className="container relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">Your Window to the Chesapeake</h1>
-            <p className="mt-4 max-w-2xl text-lg md:text-lg lg:text-lg text-white/90">
-              A peaceful retreat near the Chesapeake Bay
-            </p>
-            <Link href="#contact">
-              <Button className="mt-8 bg-window-600 hover:bg-window-700 text-base sm:text-lg px-6 py-3 h-auto">
-                Plan Your Visit
-              </Button>
-            </Link>
+          {/* Hero content - moved to top on mobile and md screens, centered on larger screens */}
+          <div className="container relative z-10 h-full">
+            {/* Hero text - positioned at top on all screens except xl+, where it's centered */}
+            <div className="pt-8 sm:pt-12 md:pt-16 xl:absolute xl:inset-0 xl:flex xl:flex-col xl:items-center xl:justify-center xl:text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#2d6d9e] xl:text-white">
+                Your Window to the Chesapeake
+              </h1>
+              <p className="mt-4 max-w-2xl text-lg text-white/90 xl:mx-auto">
+                A peaceful retreat near the Chesapeake Bay
+              </p>
+            </div>
+
+            {/* Lodgify Search Widget - positioned in the middle-bottom area */}
+            <div className="absolute bottom-1/4 left-0 right-0 z-20 px-4 sm:px-6 md:bottom-28 lg:bottom-32">
+              <div className="mx-0 px-1 w-full ">
+                <LodgifySearchBar />
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -255,4 +261,3 @@ export default function Home() {
     </div>
   )
 }
-

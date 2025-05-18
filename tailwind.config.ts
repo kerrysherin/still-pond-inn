@@ -72,11 +72,11 @@ const config = {
           200: "#bfdcec",
           300: "#92c4de",
           400: "#5fa5cb",
-          500: "#3d88b5",
-          600: "#326d98",
-          700: "#2c587c",
-          800: "#294a67",
-          900: "#263f57",
+          500: "#2d6d9e", // Updated to #2d6d9e
+          600: "#265a83", // Darker shade
+          700: "#1f4768", // Even darker
+          800: "#1a3a54", // Very dark
+          900: "#162f45", // Extremely dark
         },
       },
       borderRadius: {
@@ -104,4 +104,3 @@ const config = {
 } satisfies Config
 
 export default config
-
