@@ -22,27 +22,36 @@ export default function RoomImageCarousel() {
 
   // Load images from our static JSON file
   useEffect(() => {
-    // Get all room data from our static JSON
-    const roomsData = getAllRoomImages()
+    try {
+      // Get all room data from our static JSON
+      const roomsData = getAllRoomImages()
 
-    // Process and combine images from all rooms
-    const allImages: RoomImage[] = []
+      // Process and combine images from all rooms
+      const allImages: RoomImage[] = []
 
-    roomsData.forEach((room) => {
-      // Include ALL images as requested
-      const roomImages = room.images.map((img) => ({
-        src: img.src,
-        alt: img.alt || room.name,
-        room: room.name,
-      }))
-      allImages.push(...roomImages)
-    })
+      roomsData.forEach((room) => {
+        // Include ALL images as requested
+        const roomImages = room.images.map((img) => ({
+          src: img.src,
+          alt: img.alt || room.name,
+          room: room.name,
+        }))
+        allImages.push(...roomImages)
+      })
 
-    // Remove duplicate images based on the image URL
-    const uniqueImages = allImages.filter((image, index, self) => index === self.findIndex((t) => t.src === image.src))
+      // Remove duplicate images based on the image URL
+      const uniqueImages = allImages.filter(
+        (image, index, self) => index === self.findIndex((t) => t.src === image.src),
+      )
 
-    setImages(uniqueImages)
-    setIsLoading(false)
+      setImages(uniqueImages)
+    } catch (error) {
+      console.error("Error loading room images:", error)
+      // Set empty array on error
+      setImages([])
+    } finally {
+      setIsLoading(false)
+    }
   }, [])
 
   // Handle autoplay

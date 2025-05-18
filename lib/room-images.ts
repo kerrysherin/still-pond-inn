@@ -1,6 +1,7 @@
 // This file provides access to the room images data
 
-import roomImagesData from "@/data/room-images.json"
+// Import the JSON data correctly
+import roomImagesData from "../data/room-images.json"
 
 // Define types for our image data
 export interface RoomImage {
@@ -16,6 +17,7 @@ export interface RoomData {
 
 // Function to get all room data
 export function getAllRoomImages(): RoomData[] {
+  // Access the rooms property directly from the imported JSON
   return roomImagesData.rooms as RoomData[]
 }
 
